@@ -1,3 +1,6 @@
+let playerWins = 0;
+let computerWins = 0;
+
 function computerPlay() {
     const hand = ['Rock', 'Paper', 'Scissors'];
     return hand[randomNumber()];
@@ -14,34 +17,48 @@ function playRound(playerSelection, computerSelection) {
 
     if (playerSelection.toLowerCase() === 'rock') {
         if(computerSelection === 'Paper') {
-            return 'You Lose! Paper beats Rock'
+            computerWins++;
+            return 'You Lose! Paper beats Rock';
         } else if (computerSelection === 'Scissors') {
-            return 'You Win! Rock beats Scissors'
+            playerWins++;
+            return 'You Win! Rock beats Scissors';
         }
     }
 
     if (playerSelection.toLowerCase() === 'scissors') {
         if(computerSelection === 'Paper') {
-            return 'You Win! Scissors beats Paper'
+            playerWins++;
+            return 'You Win! Scissors beats Paper';
         } else if (computerSelection === 'Rock') {
-            return 'You Lose! Rock beats Scissors'
+            computerWins++;
+            return 'You Lose! Rock beats Scissors';
         }
     }
 
     if (playerSelection.toLowerCase() === 'paper') {
         if(computerSelection === 'Rock') {
-            return 'You Win! Paper beats Rock'
+            playerWins++;
+            return 'You Win! Paper beats Rock';
         } else if (computerSelection === 'Scissors') {
-            return 'You Lose! Scissors beats Paper'
+            computerWins++;
+            return 'You Lose! Scissors beats Paper';
         }
     }
 }
 
 function game() {
-    for(let i = 0; i < 5; i++) {
+    for (let i = 0; i < 5; i++) {
         console.log(playRound(playerSelection, computerPlay()));
+    }
+
+    if (playerWins > computerWins) {
+        return console.log('Player Wins!');
+    } else if (playerWins < computerWins) {
+        return console.log('Player Loses :(');
+    } else {
+        return console.log('Game was a Tie');
     }
 }
 
-const playerSelection = "scissors";
+const playerSelection = prompt('Choose Paper, Rock or Scissors');
 game();
