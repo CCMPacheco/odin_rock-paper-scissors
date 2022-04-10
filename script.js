@@ -14,53 +14,77 @@ function randomNumber() {
 
 function playRound(playerSelection, computerSelection) {
   if (playerSelection.toLowerCase() === computerSelection.toLowerCase()) {
-    rounds++;
-    roundsPlayed.textContent = rounds;
-    tie++;
-    ties.textContent = tie;
+    countTies();
+    countRounds();
   }
 
   if (playerSelection.toLowerCase() === "rock") {
     if (computerSelection === "Paper") {
-      computerWins++;
-      computerScore.textContent = computerWins;
-      rounds++;
-      roundsPlayed.textContent = rounds;
+      countComputerScore();
+      countRounds();
     } else if (computerSelection === "Scissors") {
-      playerWins++;
-      playerScore.textContent = playerWins;
-      rounds++;
-      roundsPlayed.textContent = rounds;
+      countPlayerScore();
+      countRounds();
     }
   }
 
   if (playerSelection.toLowerCase() === "scissors") {
     if (computerSelection === "Paper") {
-      playerWins++;
-      playerScore.textContent = playerWins;
-      rounds++;
-      roundsPlayed.textContent = rounds;
+      countPlayerScore();
+      countRounds();
     } else if (computerSelection === "Rock") {
-      computerWins++;
-      computerScore.textContent = computerWins;
-      rounds++;
-      roundsPlayed.textContent = rounds;
+      countComputerScore();
+      countRounds();
     }
   }
 
   if (playerSelection.toLowerCase() === "paper") {
     if (computerSelection === "Rock") {
-      playerWins++;
-      playerScore.textContent = playerWins;
-      rounds++;
-      roundsPlayed.textContent = rounds;
+      countPlayerScore();
+      countRounds();
     } else if (computerSelection === "Scissors") {
-      computerWins++;
-      computerScore.textContent = computerWins;
-      rounds++;
-      roundsPlayed.textContent = rounds;
+      countComputerScore();
+      countRounds();
     }
   }
+}
+
+function countRounds() {
+  rounds++;
+  roundsPlayed.textContent = rounds;
+}
+
+function countPlayerScore() {
+  playerWins++;
+  playerScore.textContent = playerWins;
+}
+
+function countComputerScore() {
+  computerWins++;
+  computerScore.textContent = computerWins;
+}
+
+function countTies() {
+  tie++;
+  ties.textContent = tie;
+}
+
+function clear() {
+  playerWins = 0;
+  computerWins = 0;
+  rounds = 0;
+  tie = 0;
+  winner.textContent = "";
+  roundsPlayed.textContent = 0;
+  ties.textContent = 0;
+  computerScore.textContent = 0;
+  playerScore.textContent = 0;
+}
+
+function callClearBtn() {
+  clearBtn.textContent = "play again";
+  clearBtn.addEventListener("click", clear);
+  winner.appendChild(clearBtn);
 }
 
 const body = document.querySelector("body");
@@ -77,29 +101,13 @@ buttons.forEach((button) => {
     if (!winner.textContent) {
       playRound(e.target.value, computerPlay());
       if (playerWins >= 5) {
-        winner.textContent = "PLAYER WINS!";
-        clearBtn.textContent = "play again";
-        clearBtn.addEventListener("click", clear);
-        winner.appendChild(clearBtn);
+        winner.textContent = "YOU WIN!";
+        callClearBtn();
       }
       if (computerWins >= 5) {
-        winner.textContent = "COMPUTER WINS!";
-        clearBtn.textContent = "play again";
-        clearBtn.addEventListener("click", clear);
-        winner.appendChild(clearBtn);
+        winner.textContent = "YOU LOSE!";
+        callClearBtn();
       }
     }
   });
 });
-
-function clear() {
-  playerWins = 0;
-  computerWins = 0;
-  rounds = 0;
-  tie = 0;
-  winner.textContent = "";
-  roundsPlayed.textContent = 0;
-  ties.textContent = 0;
-  computerScore.textContent = 0;
-  playerScore.textContent = 0;
-}
